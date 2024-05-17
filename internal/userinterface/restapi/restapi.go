@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -38,6 +39,9 @@ func NewRestAPI(cfg RestAPIConfig) *RestAPI {
 	zap.L().Info("restapi config", zap.Dict("config",
 		zap.String(PORT_KEY, cfg.Port),
 	))
+
+	http.Handle("/metrics", promhttp.Handler())
+
 	return &RestAPI{
 		server: &http.Server{
 			Addr: fmt.Sprintf(":%s", cfg.Port),
