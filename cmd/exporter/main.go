@@ -10,8 +10,8 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/hhk7734/custom_exporter.go/internal/pkg/logger"
-	"github.com/hhk7734/custom_exporter.go/internal/userinterface/restapi"
+	"github.com/hhk7734/custom_exporter.go/internal/logger"
+	"github.com/hhk7734/custom_exporter.go/internal/restapi"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
