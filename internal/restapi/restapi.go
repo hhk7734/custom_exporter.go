@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/hhk7734/custom_exporter.go/internal/exporter"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -40,6 +42,7 @@ func NewRestAPI(cfg RestAPIConfig) *RestAPI {
 		zap.String(PORT_KEY, cfg.Port),
 	))
 
+	prometheus.MustRegister(&exporter.Exporter{})
 	http.Handle("/metrics", promhttp.Handler())
 
 	return &RestAPI{
