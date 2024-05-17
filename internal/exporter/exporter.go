@@ -1,14 +1,22 @@
 package exporter
 
-import "github.com/prometheus/client_golang/prometheus"
+import (
+	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
+)
+
+const (
+	namespace = "custom"
+)
 
 var (
-	count = prometheus.NewDesc(
-		prometheus.BuildFQName("example", "", "count"),
-		"example count",
-		nil, nil,
+	durationDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "scrape_duration", "seconds"),
+		"Returns how long the scrape took to complete in seconds.",
+		nil,
+		nil,
 	)
-	countVal = 0
 )
 
 var _ prometheus.Collector = new(Exporter)
@@ -16,14 +24,19 @@ var _ prometheus.Collector = new(Exporter)
 type Exporter struct{}
 
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
-	ch <- count
+	ch <- durationDesc
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
-	e.collectExample(ch)
-}
+	start := time.Now()
+	defer func() {
+		duration := time.Since(start).Seconds()
+		ch <- prometheus.MustNewConstMetric(
+			durationDesc,
+			prometheus.GaugeValue,
+			duration,
+		)
+	}()
 
-func (e *Exporter) collectExample(ch chan<- prometheus.Metric) {
-	countVal++
-	ch <- prometheus.MustNewConstMetric(count, prometheus.CounterValue, float64(countVal))
+	// Collect metrics
 }
