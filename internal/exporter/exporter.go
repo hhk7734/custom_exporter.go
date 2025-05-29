@@ -12,14 +12,14 @@ const (
 
 var (
 	durationDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "scrape_duration", "seconds"),
+		prometheus.BuildFQName(namespace, "scrape", "duration_seconds"),
 		"Returns how long the scrape took to complete in seconds.",
 		nil,
 		nil,
 	)
 )
 
-var _ prometheus.Collector = new(Exporter)
+var _ prometheus.Collector = (*Exporter)(nil)
 
 type Exporter struct{}
 
