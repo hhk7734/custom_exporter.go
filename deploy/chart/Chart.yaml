@@ -1,0 +1,9 @@
+apiVersion: v2
+name: custom-exporter
+description: Custom Exporter
+type: application
+version: "0.0.0"
+appVersion: "0.0.0"
+home: https://github.com/hhk7734/custom_exporter.go
+sources:
+  - https://github.com/hhk7734/custom_exporter.go

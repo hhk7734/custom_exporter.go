@@ -1,0 +1,63 @@
+# -- Overrides the chart name.
+nameOverride: ""
+
+# -- Overrides the full name (release + chart).
+fullnameOverride: ""
+
+# -- Common labels to apply to all rendered resources.
+commonLabels: {}
+
+image:
+  # -- Image repository.
+  repository: ""
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+  # -- Image pull policy.
+  pullPolicy: IfNotPresent
+
+# -- Image pull secrets to use for private registries.
+imagePullSecrets: []
+
+serviceAccount:
+  # -- Specifies whether a service account should be created.
+  create: true
+  # -- Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # -- Annotations to add to the service account.
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template.
+  name: ""
+
+# -- Annotations to add to the pods.
+podAnnotations: {}
+
+# -- Labels to add to the pods.
+podLabels: {}
+
+# -- Security context for pods.
+podSecurityContext: {}
+
+# -- Security context for exporter containers.
+securityContext: {}
+
+service:
+  # -- The type of service to create.
+  type: ClusterIP
+  # -- The port that the service will expose.
+  port: 9107
+
+# -- Resource requests and limits for the container.
+resources: {}
+
+# -- Node selector for scheduling onto specific nodes.
+nodeSelector: {}
+
+# -- Tolerations for scheduling onto specific nodes.
+tolerations: []
+
+# -- Affinity rules for scheduling onto specific nodes.
+affinity: {}
+
+# -- Log level for the application. Possible values: debug, info, warn, error, panic, fatal.
+logLevel: info
