@@ -1,0 +1,34 @@
+name: helm-docs
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  helm-docs-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up asdf
+        uses: asdf-vm/actions/setup@v4
+
+      - name: Set up helm-docs
+        run: |
+          asdf plugin add helm-docs
+          asdf install helm-docs
+
+      - name: Verify Helm docs are up-to-date
+        run: |
+          make helm-docs
+
+          if ! git diff --exit-code; then
+            echo "::error::Helm docs have changed. Please run 'make helm-docs'."
+            exit 1
+          fi
