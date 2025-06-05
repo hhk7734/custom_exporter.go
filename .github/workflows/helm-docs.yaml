@@ -1,4 +1,4 @@
-name: helm-docs
+name: Validate Helm charts and docs
 
 concurrency:
   cancel-in-progress: true
@@ -19,10 +19,22 @@ jobs:
       - name: Set up asdf
         uses: asdf-vm/actions/setup@v4
 
+      - name: Set up helm
+        run: |
+          asdf plugin add helm
+          asdf install helm
+
       - name: Set up helm-docs
         run: |
           asdf plugin add helm-docs
           asdf install helm-docs
+
+      - name: Lint Helm charts
+        run: |
+          if ! make helm-lint; then
+            echo "::error::Helm chart linting failed. Please fix the issues and try again."
+            exit 1
+          fi
 
       - name: Verify Helm docs are up-to-date
         run: |

@@ -36,3 +36,8 @@ help: ## Display this help.
 helm-docs: ## Generate helm docs.
 	@echo "Generating helm docs..."
 	@helm-docs -c deploy/chart -s file
+
+.PHONY: helm-lint
+helm-lint: ## Lint helm chart.
+	@echo "Linting helm chart..."
+	@helm lint deploy/chart
