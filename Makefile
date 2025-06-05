@@ -30,14 +30,16 @@ help: ## Display this help.
 		} \
 	' $(MAKEFILE_LIST)
 
+##@ Development
+
+.PHONY: helm-lint
+helm-lint: ## Lint helm chart.
+	@echo "Linting helm chart..."
+	@helm lint deploy/chart
+
 ##@ Deployment
 
 .PHONY: helm-docs
 helm-docs: ## Generate helm docs.
 	@echo "Generating helm docs..."
 	@helm-docs -c deploy/chart -s file
-
-.PHONY: helm-lint
-helm-lint: ## Lint helm chart.
-	@echo "Linting helm chart..."
-	@helm lint deploy/chart

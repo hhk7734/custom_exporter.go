@@ -61,3 +61,26 @@ affinity: {}
 
 # -- Log level for the application. Possible values: debug, info, warn, error, panic, fatal.
 logLevel: info
+
+serviceMonitor:
+  # -- Specifies whether to create a ServiceMonitor for Prometheus.
+  enabled: false
+
+  # -- Additional labels to add to the ServiceMonitor.
+  additionalLabels: {}
+
+  interval: 10s
+
+  honorLabels: false
+
+  # -- https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+  relabelings:
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_node_name
+      targetLabel: hostname
+    - action: labeldrop
+      regex: container|endpoint|namespace|pod|service
+
+  # -- https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
+  metricRelabelings: []
